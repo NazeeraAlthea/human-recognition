@@ -1,0 +1,10 @@
+/.gradio
+/dataset
+/datauji
+/venv
+*.keras
+*.h5
+*.pth
+*.pkl
+__pycache__/
+*.pyc
