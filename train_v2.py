@@ -90,8 +90,8 @@ history_finetune = model.fit(
 )
 
 # --- SIMPAN MODEL ---
-model.save("model_postur_finetune_v2.keras")
-print("Model sudah disimpan sebagai model_postur_finetune_v2.keras")
+model.save("model_postur_finetune.keras")
+print("Model sudah disimpan sebagai model_postur_finetune.keras")
 print("Urutan class_indices:", train_data.class_indices)
 
 # --- VISUALISASI AKURASI ---
