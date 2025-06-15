@@ -29,6 +29,7 @@ Dilengkapi segmentasi otomatis (MediaPipe/KMeans) agar hasil prediksi tetap akur
 ---
 
 ## 🏗️ Arsitektur
+```bash
 dataset/
 ├─ berdiri/
 ├─ duduk/
@@ -40,7 +41,7 @@ main.py
 model_postur_finetune_vX.keras
 requirements.txt
 README.md
-
+```
 
 ---
 
@@ -64,16 +65,17 @@ README.md
 ## 📁 Struktur Dataset
 Link Download:
 https://www.kaggle.com/datasets/deepshah16/silhouettes-of-human-posture
-
+```bash
 dataset/
 ├─ bending/
 ├─ lying/
 ├─ sitting/
 └─ standing/
-
+```
 ## 🚀 Cara Penggunaan
  // notes:  gunakan salah satu train yang anda inginkan v1 atau v2
             jika menggunakan v1 maka ganti baris 
+            
             v1 : model = tf.keras.models.load_model("model_postur_finetune.keras")
             v2 : model = tf.keras.models.load_model("model_postur_finetune_v2.keras")
 1. **Training Model**
