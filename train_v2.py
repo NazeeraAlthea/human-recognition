@@ -3,11 +3,13 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Input
 from tensorflow.keras.models import Model
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
 import itertools
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
+
+
 
 # --- DATA AUGMENTATION ---
 data_dir = 'dataset'
@@ -56,19 +58,11 @@ model = Model(inputs, outputs)
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# --- CALLBACKS ---
-callbacks = [
-    EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True, verbose=1),
-    ModelCheckpoint('model_postur_best.keras', monitor='val_loss', save_best_only=True, verbose=1),
-    ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=4, min_lr=1e-6, verbose=1)
-]
-
 # --- TRAINING AWAL (BASE) ---
-history_base = model.fit(
+history = model.fit(
     train_data,
-    epochs=80,   # epoch besar, aman karena pakai callback!
-    validation_data=val_data,
-    callbacks=callbacks
+    epochs=40,
+    validation_data=val_data
 )
 
 # --- FINE-TUNING (UNFREEZE 20 LAYER TERAKHIR MOBILENETV2) ---
@@ -81,22 +75,20 @@ model.compile(
     loss='categorical_crossentropy',
     metrics=['accuracy']
 )
-
 history_finetune = model.fit(
     train_data,
-    epochs=20,    # fine-tuning juga boleh epoch besar (auto-stop via callback)
-    validation_data=val_data,
-    callbacks=callbacks
+    epochs=5,
+    validation_data=val_data
 )
 
 # --- SIMPAN MODEL ---
-model.save("model_postur_finetune.keras")
+model.save("model_postur_finetune_v2.keras")
 print("Model sudah disimpan sebagai model_postur_finetune.keras")
 print("Urutan class_indices:", train_data.class_indices)
 
 # --- VISUALISASI AKURASI ---
-plt.plot(history_base.history['accuracy'] + history_finetune.history['accuracy'], label='Akurasi Training')
-plt.plot(history_base.history['val_accuracy'] + history_finetune.history['val_accuracy'], label='Akurasi Validasi')
+plt.plot(history.history['accuracy'] + history_finetune.history['accuracy'], label='Akurasi Training')
+plt.plot(history.history['val_accuracy'] + history_finetune.history['val_accuracy'], label='Akurasi Validasi')
 plt.xlabel('Epoch')
 plt.ylabel('Akurasi')
 plt.legend()

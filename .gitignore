@@ -8,3 +8,4 @@
 *.pkl
 __pycache__/
 *.pyc
+.zip

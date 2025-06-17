@@ -55,7 +55,7 @@ if uploaded_file is not None:
     img = np.expand_dims(img, axis=0)
     
     # Load model postur (hasil training siluet)
-    model = tf.keras.models.load_model("model_postur_finetune.keras")
+    model = tf.keras.models.load_model("model_postur_finetune_v2.keras")
     labels = ["membungkuk", "berbaring", "duduk", "berdiri"]
     preds = model.predict(img)
     idx = np.argmax(preds[0])
