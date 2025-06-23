@@ -51,7 +51,7 @@ README.md
     ```bash
     git clone https://github.com/username/nama-repo.git
     cd nama-repo
-    python -m venv venv
+    py -3.10 -m venv venv
     venv\Scripts\activate        # Windows
     # source venv/bin/activate  # Linux/Mac
     ```
